@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BeforeBuying.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BeforeBuyingStoreContainer">
+    <EntitySet Name="ItemSet" EntityType="BeforeBuying.Store.ItemSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopSet" EntityType="BeforeBuying.Store.ShopSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PriceSet" EntityType="BeforeBuying.Store.PriceSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DiscountSet" EntityType="BeforeBuying.Store.DiscountSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ItemPrice" Association="BeforeBuying.Store.ItemPrice">
+      <End Role="Item" EntitySet="ItemSet" />
+      <End Role="Price" EntitySet="PriceSet" />
+    </AssociationSet>
+    <AssociationSet Name="ShopPrice" Association="BeforeBuying.Store.ShopPrice">
+      <End Role="Shop" EntitySet="ShopSet" />
+      <End Role="Price" EntitySet="PriceSet" />
+    </AssociationSet>
+    <AssociationSet Name="PriceDiscount" Association="BeforeBuying.Store.PriceDiscount">
+      <End Role="Price" EntitySet="PriceSet" />
+      <End Role="Discount" EntitySet="DiscountSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ItemSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EAN" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitOfMeasure" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PriceSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriceInclVAT" Type="decimal" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="PricePerUnit" Type="decimal" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DiscountSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DiscountFrom" Type="datetime" Nullable="false" />
+    <Property Name="DiscountTo" Type="datetime" Nullable="false" />
+    <Property Name="Percent" Type="smallint" Nullable="false" />
+    <Property Name="PriceInclVAT" Type="decimal" Nullable="false" />
+    <Property Name="PriceId" Type="int" Nullable="true" />
+  </EntityType>
+  <Association Name="ItemPrice">
+    <End Role="Item" Type="BeforeBuying.Store.ItemSet" Multiplicity="1" />
+    <End Role="Price" Type="BeforeBuying.Store.PriceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Price">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShopPrice">
+    <End Role="Shop" Type="BeforeBuying.Store.ShopSet" Multiplicity="1" />
+    <End Role="Price" Type="BeforeBuying.Store.PriceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Price">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PriceDiscount">
+    <End Role="Price" Type="BeforeBuying.Store.PriceSet" Multiplicity="0..1" />
+    <End Role="Discount" Type="BeforeBuying.Store.DiscountSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Price">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discount">
+        <PropertyRef Name="PriceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BeforeBuying" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BeforeBuyingContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ItemSet" EntityType="BeforeBuying.Item" />
+          <EntitySet Name="ShopSet" EntityType="BeforeBuying.Shop" />
+          <EntitySet Name="PriceSet" EntityType="BeforeBuying.Price" />
+          <AssociationSet Name="ItemPrice" Association="BeforeBuying.ItemPrice">
+            <End Role="Item" EntitySet="ItemSet" />
+            <End Role="Price" EntitySet="PriceSet" />
+          </AssociationSet>
+          <AssociationSet Name="ShopPrice" Association="BeforeBuying.ShopPrice">
+            <End Role="Shop" EntitySet="ShopSet" />
+            <End Role="Price" EntitySet="PriceSet" />
+          </AssociationSet>
+          <EntitySet Name="DiscountSet" EntityType="BeforeBuying.Discount" />
+          <AssociationSet Name="PriceDiscount" Association="BeforeBuying.PriceDiscount">
+            <End Role="Price" EntitySet="PriceSet" />
+            <End Role="Discount" EntitySet="DiscountSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="EAN" Type="String" Nullable="false" />
+          <NavigationProperty Name="Price1" Relationship="BeforeBuying.ItemPrice" FromRole="Item" ToRole="Price" />
+          <Property Name="UnitOfMeasure" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Price" Relationship="BeforeBuying.ShopPrice" FromRole="Shop" ToRole="Price" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PriceInclVAT" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="BeforeBuying.ItemPrice" FromRole="Price" ToRole="Item" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Shop" Relationship="BeforeBuying.ShopPrice" FromRole="Price" ToRole="Shop" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="PricePerUnit" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Discount" Relationship="BeforeBuying.PriceDiscount" FromRole="Price" ToRole="Discount" />
+        </EntityType>
+        <Association Name="ItemPrice">
+          <End Type="BeforeBuying.Item" Role="Item" Multiplicity="1" />
+          <End Type="BeforeBuying.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ShopPrice">
+          <End Type="BeforeBuying.Shop" Role="Shop" Multiplicity="1" />
+          <End Type="BeforeBuying.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DiscountFrom" Type="DateTime" Nullable="false" />
+          <Property Name="DiscountTo" Type="DateTime" Nullable="false" />
+          <Property Name="Percent" Type="Int16" Nullable="false" />
+          <Property Name="PriceInclVAT" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Price" Relationship="BeforeBuying.PriceDiscount" FromRole="Discount" ToRole="Price" />
+          <Property Name="PriceId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <Association Name="PriceDiscount">
+          <End Type="BeforeBuying.Price" Role="Price" Multiplicity="0..1" />
+          <End Type="BeforeBuying.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="PriceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BeforeBuyingStoreContainer" CdmEntityContainer="BeforeBuyingContainer">
+    <EntitySetMapping Name="ItemSet">
+      <EntityTypeMapping TypeName="IsTypeOf(BeforeBuying.Item)">
+        <MappingFragment StoreEntitySet="ItemSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopSet">
+      <EntityTypeMapping TypeName="IsTypeOf(BeforeBuying.Shop)">
+        <MappingFragment StoreEntitySet="ShopSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceSet">
+      <EntityTypeMapping TypeName="IsTypeOf(BeforeBuying.Price)">
+        <MappingFragment StoreEntitySet="PriceSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PriceInclVAT" ColumnName="PriceInclVAT" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="PricePerUnit" ColumnName="PricePerUnit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscountSet">
+      <EntityTypeMapping TypeName="IsTypeOf(BeforeBuying.Discount)">
+        <MappingFragment StoreEntitySet="DiscountSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DiscountFrom" ColumnName="DiscountFrom" />
+          <ScalarProperty Name="DiscountTo" ColumnName="DiscountTo" />
+          <ScalarProperty Name="Percent" ColumnName="Percent" />
+          <ScalarProperty Name="PriceInclVAT" ColumnName="PriceInclVAT" />
+          <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
