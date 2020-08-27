@@ -65,6 +65,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BeforeBuying.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DiscountDataContract.cs" />
+    <Compile Include="ItemDataContract.cs" />
     <Compile Include="Nakup.cs" />
     <Compile Include="Discount.cs">
       <DependentUpon>BeforeBuying.tt</DependentUpon>
@@ -75,10 +77,12 @@
     <Compile Include="Price.cs">
       <DependentUpon>BeforeBuying.tt</DependentUpon>
     </Compile>
+    <Compile Include="PriceDataContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shop.cs">
       <DependentUpon>BeforeBuying.tt</DependentUpon>
     </Compile>
+    <Compile Include="ShopDataContract.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="BeforeBuying.edmx">

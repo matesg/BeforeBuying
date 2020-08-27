@@ -18,7 +18,7 @@ namespace BeforeBuying.Test
         public void GetItem()
         {
             Business.DBRepository2 bll = new Business.DBRepository2();
-            var a = bll.GetAll(1);
+            var a = bll.GetAllItems(1);
         }
 
         [TestMethod]

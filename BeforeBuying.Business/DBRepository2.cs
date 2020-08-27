@@ -18,10 +18,16 @@ namespace BeforeBuying.Business
             context = new BeforeBuyingContainer();
         }
 
-        public List<Item> GetAll(int id)
+        public async Task<List<Item>> GetAllItemsAsync(int id)
         {
+            return await context.ItemSet.ToListAsync();
             return context.ItemSet.Select(x => x).ToList();
 
+        }
+
+        public List<Item> GetAllItems(int id)
+        {
+            return context.ItemSet.Select(x => x).ToList();
         }
 
         public bool InsertOrUpdateItem(Item item)
@@ -30,6 +36,7 @@ namespace BeforeBuying.Business
             return true;
         }
 
+        
         public bool InsertOrUpdateShop(Shop shop)
         {
             context.ShopSet.Add(shop);
@@ -48,10 +55,10 @@ namespace BeforeBuying.Business
             return true;
         }
 
-        public Item GetItemById(int id)
+        public async Task<Item> GetItemById(int id)
         {
             Item item;
-            item = context.ItemSet.FirstOrDefault(x => x.Id == id);
+            item = await context.ItemSet.FirstOrDefaultAsync(x => x.Id == id);
             return item;
         }
 
@@ -82,6 +89,22 @@ namespace BeforeBuying.Business
             try
             {
                 context.SaveChanges();
+                retVal = true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return retVal;
+        }
+        public async Task<bool> SaveAsync()
+        {
+            bool retVal = false;
+            try
+            {
+                await context.SaveChangesAsync();
                 retVal = true;
             }
             catch (Exception ex)
