@@ -41,20 +41,29 @@ namespace WebCoreApplication1.Controllers
 
         // GET: api/BlogPosts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BeforeBuying.Model.Item>>> GetItem()
+        public async Task<ActionResult<IEnumerable<BeforeBuying.Model.ItemDataContract>>> GetItem()
         {
             DBRepository2 dBRepository2 = new DBRepository2();
-            return await dBRepository2.GetAllItemsAsync(1);
+            return dBRepository2.GetAllItemsAsync().Result;
+
+            //return await _context.BlogPosts.ToListAsync();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BeforeBuying.Model.ItemDataContract>>> GetShop()
+        {
+            DBRepository2 dBRepository2 = new DBRepository2();
+            return await dBRepository2.GetAllItemsAsync();
 
             //return await _context.BlogPosts.ToListAsync();
         }
 
         // GET: api/BlogPosts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetItem(int id)
+        public async Task<ActionResult<ItemDataContract>> GetItem(int id)
         {
             DBRepository2 dBRepository2 = new DBRepository2();
-            Task<Item> item = dBRepository2.GetItemById(id);
+            Task<ItemDataContract> item = dBRepository2.GetItemByIdAsync(id);
             return await item;
         }
 
@@ -66,8 +75,8 @@ namespace WebCoreApplication1.Controllers
             
             try
             {
-                dBRepository2.InsertOrUpdateItem(item);
-                await dBRepository2.SaveAsync();
+                //dBRepository2.InsertOrUpdateItem(item);
+                //await dBRepository2.SaveAsync();
             }
             catch (Exception ex)
             {
@@ -90,8 +99,8 @@ namespace WebCoreApplication1.Controllers
         public async Task<ActionResult<Item>> PostBlogPost(Item item)
         {
             DBRepository2 dBRepository2 = new DBRepository2();
-            dBRepository2.InsertOrUpdateItem(item);
-            await dBRepository2.SaveAsync();
+            //dBRepository2.InsertOrUpdateItem(item);
+            //await dBRepository2.SaveAsync();
 
             return CreatedAtAction("GetItem", new { id = item.Id }, item);
         }

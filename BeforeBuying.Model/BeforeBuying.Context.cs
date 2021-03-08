@@ -19,7 +19,12 @@ namespace BeforeBuying.Model
             : base("name=BeforeBuyingContainer")
         {
         }
-    
+
+        public BeforeBuyingContainer(string connString)
+            : base("name=BeforeBuyingContainer")
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

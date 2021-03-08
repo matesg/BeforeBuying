@@ -36,10 +36,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -50,6 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeforeBuying.Business\BeforeBuying.Business.csproj">
+      <Project>{b9ac1673-bb33-439e-a8d2-f633f001a251}</Project>
+      <Name>BeforeBuying.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeforeBuying.Model\BeforeBuying.Model.csproj">
+      <Project>{ef95f1d0-1d08-4442-9546-56642c775639}</Project>
+      <Name>BeforeBuying.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

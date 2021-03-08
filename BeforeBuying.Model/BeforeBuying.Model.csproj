@@ -66,6 +66,7 @@
       <DependentUpon>BeforeBuying.edmx</DependentUpon>
     </Compile>
     <Compile Include="DiscountDataContract.cs" />
+    <Compile Include="GetShopDBData.cs" />
     <Compile Include="ItemDataContract.cs" />
     <Compile Include="Nakup.cs" />
     <Compile Include="Discount.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeforeBuying.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -26,6 +27,14 @@ namespace BeforeBuying.Svc
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }
+
+        public List<ShopDataContract> GetShops()
+        {
+            Business.DBRepository2 bll = new Business.DBRepository2();
+            List<ShopDataContract> shops = bll.GetShops();
+            return shops;
+            //return json(shops, "application/json");
         }
     }
 }
